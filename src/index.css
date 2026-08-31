@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: #0b1120;
+    --color-surface: #131d31;
+    --color-card: #1e293b;
+    --color-border: rgba(255, 255, 255, 0.08);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  body {
+    background-color: #090d16;
+    color: #f1f5f9;
+    background-image: 
+      radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(245, 158, 11, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 50% 85%, rgba(14, 165, 233, 0.04) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1120;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #273549;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
+/* Glassmorphism & UI Effects */
+.glass-panel {
+  background: rgba(19, 29, 49, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-glow-emerald {
+  background: rgba(19, 29, 49, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.08);
+}
+
+.glass-panel-glow-amber {
+  background: rgba(19, 29, 49, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.08);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.subtle-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* Solar Thermal Glow */
+.solar-ray-gradient {
+  background: linear-gradient(180deg, rgba(251, 191, 36, 0.3) 0%, rgba(245, 158, 11, 0) 100%);
+}
+
+.dark-absorption-glow {
+  box-shadow: 0 0 35px rgba(239, 68, 68, 0.25), inset 0 0 20px rgba(0,0,0,0.8);
+}
+
+.clear-reflection-glow {
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+}
+
+/* Print Optimization */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .glass-panel, .glass-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+    color: #0f172a !important;
+  }
+}
