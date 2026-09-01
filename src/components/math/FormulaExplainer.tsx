@@ -66,12 +66,12 @@ export const FormulaExplainer: React.FC = () => {
 
         <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 font-mono text-center">
           <span className="text-sm font-bold text-amber-300">
-            % = [(ΔT<sub className="text-[10px] font-sans">maior</sub> − ΔT<sub className="text-[10px] font-sans">menor</sub>) ÷ ΔT<sub className="text-[10px] font-sans">menor</sub>] × 100
+            % = [(ΔT<sub className="text-[10px] font-sans">preta</sub> − ΔT<sub className="text-[10px] font-sans">transp</sub>) ÷ ΔT<sub className="text-[10px] font-sans">transp</sub>] × 100
           </span>
         </div>
 
         <p className="text-[11px] text-slate-400 leading-relaxed">
-          Expressa em porcentagem quanto a garrafa que mais aqueceu superou a garrafa de referência menor.
+          Expressa em porcentagem quanto a variação de temperatura da garrafa preta superou ou diferiu da garrafa transparente (usada como referência base).
         </p>
       </Card>
 

@@ -23,6 +23,8 @@ interface ExperimentContextType {
   activePage: ActivePage;
   setActivePage: (page: ActivePage) => void;
   globalStats: GlobalExperimentStats;
+  marginThreshold: number;
+  setMarginThreshold: (margin: number) => void;
   addMeasurement: (measurement: Omit<Measurement, 'id'>) => void;
   updateMeasurement: (id: string, updated: Partial<Measurement>) => void;
   deleteMeasurement: (id: string) => void;
@@ -66,7 +68,17 @@ export const ExperimentProvider: React.FC<{ children: ReactNode }> = ({ children
     }
   });
 
-  // 2. Checklist State
+  // 2. Minimum difference margin setting (default 0.5°C)
+  const [marginThreshold, setMarginThresholdState] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('clima_lab_margin_threshold_v1');
+      return saved ? parseFloat(saved) : 0.5;
+    } catch {
+      return 0.5;
+    }
+  });
+
+  // 3. Checklist State
   const [checklist, setChecklist] = useState<ChecklistItem[]>(() => {
     try {
       const saved = localStorage.getItem('clima_lab_checklist_v1');
@@ -76,31 +88,23 @@ export const ExperimentProvider: React.FC<{ children: ReactNode }> = ({ children
     }
   });
 
-  // 3. Speech Members State
-  const [members, setMembers] = useState<SpeechMember[]>(() => {
+  // 4. Speech Members Base State (mastery & practice counts persisted)
+  const [storedMemberData, setStoredMemberData] = useState<Record<string, { masteryLevel: MasteryLevel; practiceCount: number; lastPracticed?: string }>>(() => {
     try {
-      const saved = localStorage.getItem('clima_lab_members_v1');
-      if (saved) {
-        const parsed: SpeechMember[] = JSON.parse(saved);
-        // Merge with initial to preserve fresh templates if updated
-        return INITIAL_MEMBERS.map(init => {
-          const match = parsed.find(p => p.id === init.id);
-          return match ? { ...init, masteryLevel: match.masteryLevel, practiceCount: match.practiceCount || 0 } : init;
-        });
-      }
-      return INITIAL_MEMBERS;
+      const saved = localStorage.getItem('clima_lab_members_data_v2');
+      return saved ? JSON.parse(saved) : {};
     } catch {
-      return INITIAL_MEMBERS;
+      return {};
     }
   });
 
-  // 4. Simulation Parameters
+  // 5. Simulation Parameters
   const [simulationParams, setSimulationParams] = useState<SimulationParams>(DEFAULT_SIM_PARAMS);
 
-  // 5. Active Navigation Page
+  // 6. Active Navigation Page
   const [activePage, setActivePageState] = useState<ActivePage>('dashboard');
 
-  // 6. Sound Setting
+  // 7. Sound Setting
   const [soundEnabled, setSoundEnabled] = useState<boolean>(() => {
     try {
       const saved = localStorage.getItem('clima_lab_sound_enabled');
@@ -110,7 +114,7 @@ export const ExperimentProvider: React.FC<{ children: ReactNode }> = ({ children
     }
   });
 
-  // 7. Modals
+  // 8. Modals
   const [isWelcomeOpen, setWelcomeOpen] = useState<boolean>(() => {
     try {
       return localStorage.getItem('clima_lab_has_seen_welcome') !== 'true';
@@ -130,6 +134,15 @@ export const ExperimentProvider: React.FC<{ children: ReactNode }> = ({ children
     }
   }, [measurements]);
 
+  // Persist Margin Threshold
+  useEffect(() => {
+    try {
+      localStorage.setItem('clima_lab_margin_threshold_v1', String(marginThreshold));
+    } catch (e) {
+      console.error('Failed to save margin threshold to localStorage', e);
+    }
+  }, [marginThreshold]);
+
   // Persist Checklist
   useEffect(() => {
     try {
@@ -139,14 +152,14 @@ export const ExperimentProvider: React.FC<{ children: ReactNode }> = ({ children
     }
   }, [checklist]);
 
-  // Persist Members
+  // Persist Members training data
   useEffect(() => {
     try {
-      localStorage.setItem('clima_lab_members_v1', JSON.stringify(members));
+      localStorage.setItem('clima_lab_members_data_v2', JSON.stringify(storedMemberData));
     } catch (e) {
-      console.error('Failed to save members to localStorage', e);
+      console.error('Failed to save member data to localStorage', e);
     }
-  }, [members]);
+  }, [storedMemberData]);
 
   // Persist Sound
   useEffect(() => {
@@ -176,10 +189,42 @@ export const ExperimentProvider: React.FC<{ children: ReactNode }> = ({ children
     setSoundEnabled(prev => !prev);
   };
 
-  // Global Statistics Computed Dynamically
+  const setMarginThreshold = (margin: number) => {
+    const validMargin = Math.max(0, Math.min(10, margin));
+    setMarginThresholdState(Number(validMargin.toFixed(2)));
+    sound.playClick();
+  };
+
+  // Global Statistics Computed Dynamically based on Delta T and margin threshold
   const globalStats = useMemo(() => {
-    return computeGlobalStats(measurements);
-  }, [measurements]);
+    return computeGlobalStats(measurements, marginThreshold);
+  }, [measurements, marginThreshold]);
+
+  // Dynamic Members list: Esther's speech dynamically reflects the scientific conclusion
+  const members = useMemo<SpeechMember[]>(() => {
+    return INITIAL_MEMBERS.map(init => {
+      const savedData = storedMemberData[init.id] || { masteryLevel: 'none' as MasteryLevel, practiceCount: 0 };
+      
+      if (init.id === 'esther') {
+        return {
+          ...init,
+          speechText: globalStats.estherSpeech.text,
+          clozeTemplate: globalStats.estherSpeech.clozeTemplate,
+          clozeAnswers: globalStats.estherSpeech.clozeAnswers,
+          masteryLevel: savedData.masteryLevel,
+          practiceCount: savedData.practiceCount,
+          lastPracticed: savedData.lastPracticed,
+        };
+      }
+
+      return {
+        ...init,
+        masteryLevel: savedData.masteryLevel,
+        practiceCount: savedData.practiceCount,
+        lastPracticed: savedData.lastPracticed,
+      };
+    });
+  }, [storedMemberData, globalStats.estherSpeech]);
 
   // Actions
   const addMeasurement = (data: Omit<Measurement, 'id'>) => {
@@ -239,26 +284,44 @@ export const ExperimentProvider: React.FC<{ children: ReactNode }> = ({ children
   };
 
   const updateMemberMastery = (id: string, level: MasteryLevel) => {
-    setMembers(prev => 
-      prev.map(m => m.id === id ? { ...m, masteryLevel: level } : m)
-    );
+    setStoredMemberData(prev => ({
+      ...prev,
+      [id]: {
+        ...(prev[id] || { practiceCount: 0 }),
+        masteryLevel: level,
+      }
+    }));
     sound.playSuccess();
   };
 
   const incrementMemberPractice = (id: string) => {
-    setMembers(prev => 
-      prev.map(m => m.id === id ? { 
-        ...m, 
-        practiceCount: (m.practiceCount || 0) + 1,
-        lastPracticed: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
-      } : m)
-    );
+    setStoredMemberData(prev => {
+      const current = prev[id] || { masteryLevel: 'none', practiceCount: 0 };
+      return {
+        ...prev,
+        [id]: {
+          ...current,
+          practiceCount: current.practiceCount + 1,
+          lastPracticed: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+        }
+      };
+    });
   };
 
   const restoreBackup = (data: { measurements?: Measurement[]; checklist?: ChecklistItem[]; members?: SpeechMember[] }) => {
     if (data.measurements) setMeasurements(data.measurements);
     if (data.checklist) setChecklist(data.checklist);
-    if (data.members) setMembers(data.members);
+    if (data.members) {
+      const dataMap: Record<string, { masteryLevel: MasteryLevel; practiceCount: number; lastPracticed?: string }> = {};
+      data.members.forEach(m => {
+        dataMap[m.id] = {
+          masteryLevel: m.masteryLevel,
+          practiceCount: m.practiceCount,
+          lastPracticed: m.lastPracticed,
+        };
+      });
+      setStoredMemberData(dataMap);
+    }
     sound.playSuccess();
   };
 
@@ -273,6 +336,8 @@ export const ExperimentProvider: React.FC<{ children: ReactNode }> = ({ children
         activePage,
         setActivePage,
         globalStats,
+        marginThreshold,
+        setMarginThreshold,
         addMeasurement,
         updateMeasurement,
         deleteMeasurement,

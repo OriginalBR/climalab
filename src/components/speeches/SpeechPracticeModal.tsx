@@ -54,10 +54,10 @@ export const SpeechPracticeModal: React.FC<SpeechPracticeModalProps> = ({
 
   if (!member) return null;
 
-  // Dynamically inject real stats if this is Esther (Results member)
+  // Dynamically inject real stats tag if this is Esther (Results member) and data is available
   let renderedSpeechText = member.speechText;
-  if (member.id === 'esther' && globalStats.hasData && globalStats.avgDeltaTBlack > 0) {
-    renderedSpeechText += `\n\n[DADOS REAIS CONSOLIDADOS DO NOSSO GRUPO: Variação média da garrafa preta: +${globalStats.avgDeltaTBlack.toFixed(1)}°C | Variação média da transparente: +${globalStats.avgDeltaTClear.toFixed(1)}°C]`;
+  if (member.id === 'esther' && globalStats.hasValidTests) {
+    renderedSpeechText += `\n\n[DADOS REAIS DO GRUPO: ΔT Médio Preta: +${globalStats.avgDeltaTBlack.toFixed(1)}°C | ΔT Médio Transparente: +${globalStats.avgDeltaTClear.toFixed(1)}°C | Diferença: ${globalStats.avgDifference > 0 ? '+' : ''}${globalStats.avgDifference.toFixed(1)}°C]`;
   }
 
   // Cloze test parser: parse {{answer}} parts

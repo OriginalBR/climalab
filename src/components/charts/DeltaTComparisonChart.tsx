@@ -57,7 +57,7 @@ export const DeltaTComparisonChart: React.FC = () => {
               <div className="flex justify-between items-center text-xs">
                 <span className="font-bold text-slate-200">Ensaio Experimental {test.testNumber}</span>
                 <span className="text-[11px] font-mono text-amber-400 font-semibold">
-                  Diferença: +{test.differenceDeltaT > 0 ? test.differenceDeltaT : 0}°C ({test.percentageDifference}%)
+                  Diferença: {test.differenceDeltaT > 0 ? `+${test.differenceDeltaT.toFixed(1)}°C` : `${test.differenceDeltaT.toFixed(1)}°C`} {test.percentageDifference !== null ? `(${test.percentageDifference > 0 ? '+' : ''}${test.percentageDifference}%)` : ''}
                 </span>
               </div>
 

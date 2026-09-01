@@ -136,20 +136,12 @@ Assim, conseguimos comparar matematicamente o aquecimento das duas garrafas.`,
     role: 'Apresentadora 6',
     topic: 'Análise dos Resultados Reais',
     avatarSeed: 'Esther',
-    speechText: `Depois de analisar os dados, conseguimos verificar qual das duas garrafas apresentou maior aumento de temperatura.
-
-Aqui podemos observar nossa tabela e nosso gráfico, que mostram como a temperatura mudou durante o experimento.
-
-Os resultados são importantes porque não estamos apenas dizendo que uma garrafa aqueceu mais: estamos comprovando através de medições e cálculos o que aconteceu.`,
-    clozeTemplate: `Depois de analisar os {{dados}}, conseguimos verificar qual das duas garrafas apresentou {{maior}} aumento de temperatura.
-
-Aqui podemos observar nossa {{tabela}} e nosso {{gráfico}}, que mostram como a temperatura mudou durante o experimento.
-
-Os resultados são importantes porque não estamos apenas dizendo que uma garrafa aqueceu mais: estamos {{comprovando}} através de {{medições}} e {{cálculos}} o que aconteceu.`,
-    clozeAnswers: ['dados', 'maior', 'tabela', 'gráfico', 'comprovando', 'medições', 'cálculos'],
+    speechText: `Os dados confirmaram nossa hipótese: nas condições do nosso experimento, a garrafa preta apresentou maior aumento de temperatura do que a transparente. Usamos uma tabela e um gráfico para organizar as temperaturas e comparar os resultados. Assim, observamos que a superfície escura apresentou maior aquecimento nas condições testadas.`,
+    clozeTemplate: `Os dados {{confirmaram}} nossa hipótese: nas condições do nosso experimento, a garrafa {{preta}} apresentou maior aumento de temperatura do que a {{transparente}}. Usamos uma {{tabela}} e um {{gráfico}} para organizar as temperaturas e comparar os resultados. Assim, observamos que a superfície {{escura}} apresentou maior aquecimento nas condições testadas.`,
+    clozeAnswers: ['confirmaram', 'preta', 'transparente', 'tabela', 'gráfico', 'escura'],
     tips: [
-      'Cite os valores exatos de ΔT da garrafa preta e da transparente.',
-      'Aponte as curvas no gráfico de Temperatura x Tempo.'
+      'Cite os valores médios de ΔT calculados para a garrafa preta e transparente.',
+      'Aponte a diferença em °C e no gráfico de Temperatura x Tempo.'
     ],
     masteryLevel: 'none',
     practiceCount: 0

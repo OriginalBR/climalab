@@ -18,7 +18,8 @@ export const DataPage: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
               Coleta de Evidências Reais
             </span>
-            <Badge variant="emerald" dot>Persistência Local Automática</Badge>
+            <Badge variant="emerald" dot>🟢 Dados reais</Badge>
+            <Badge variant="black">ODS 13 • Feira de Ciências</Badge>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-white">
             Registro dos Resultados Reais do Grupo

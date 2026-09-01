@@ -82,10 +82,10 @@ export const PrintableReportModal: React.FC = () => {
 
           {/* Results Summary Box */}
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <h3 className="font-bold text-slate-900 text-sm">Resumo Matemático dos Ensaios Reais</h3>
+            <h3 className="font-bold text-slate-900 text-sm">Resumo Matemático dos Ensaios Reais (Baseado em ΔT)</h3>
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center text-[11px]">
               <div className="p-2 bg-white rounded border">
-                <span className="text-[10px] text-slate-500 block">Testes</span>
+                <span className="text-[10px] text-slate-500 block">Ensaios Válidos</span>
                 <strong>{globalStats.totalTests}</strong>
               </div>
               <div className="p-2 bg-white rounded border">
@@ -93,27 +93,63 @@ export const PrintableReportModal: React.FC = () => {
                 <strong>{globalStats.avgInitialTemp.toFixed(1)}°C</strong>
               </div>
               <div className="p-2 bg-white rounded border">
-                <span className="text-[10px] text-slate-500 block">ΔT Preta</span>
+                <span className="text-[10px] text-slate-500 block">ΔT Médio Preta</span>
                 <strong className="text-rose-700">+{globalStats.avgDeltaTBlack.toFixed(1)}°C</strong>
               </div>
               <div className="p-2 bg-white rounded border">
-                <span className="text-[10px] text-slate-500 block">ΔT Transparente</span>
+                <span className="text-[10px] text-slate-500 block">ΔT Médio Transp.</span>
                 <strong className="text-sky-700">+{globalStats.avgDeltaTClear.toFixed(1)}°C</strong>
               </div>
               <div className="p-2 bg-white rounded border">
-                <span className="text-[10px] text-slate-500 block">Diferença</span>
-                <strong>{Math.abs(globalStats.avgDifference).toFixed(1)}°C</strong>
+                <span className="text-[10px] text-slate-500 block">Diferença Médias</span>
+                <strong>{globalStats.avgDifference > 0 ? `+${globalStats.avgDifference.toFixed(1)}°C` : `${globalStats.avgDifference.toFixed(1)}°C`}</strong>
               </div>
               <div className="p-2 bg-white rounded border">
                 <span className="text-[10px] text-slate-500 block">Diferença %</span>
-                <strong>+{globalStats.avgPercentageDiff}%</strong>
+                <strong>{globalStats.canCalculatePercentage && globalStats.avgPercentageDiff !== null ? `${globalStats.avgPercentageDiff > 0 ? '+' : ''}${globalStats.avgPercentageDiff}%` : 'N/A'}</strong>
               </div>
             </div>
+            <p className="text-[10px] text-slate-500 italic text-center">
+              {globalStats.percentageReferenceNote}
+            </p>
           </div>
+
+          {/* Test by Test Delta T Breakdown Table */}
+          {globalStats.testSummaries.length > 0 && (
+            <div className="space-y-2">
+              <h3 className="font-bold text-slate-900 text-sm">Variação Térmica (ΔT) por Ensaio</h3>
+              <table className="w-full text-left border-collapse border border-slate-300 text-[11px]">
+                <thead className="bg-slate-100 text-slate-800">
+                  <tr>
+                    <th className="border border-slate-300 p-1.5">Ensaio</th>
+                    <th className="border border-slate-300 p-1.5">T_inicial (P / T)</th>
+                    <th className="border border-slate-300 p-1.5">T_final (P / T)</th>
+                    <th className="border border-slate-300 p-1.5 text-rose-700 font-bold">ΔT Preta</th>
+                    <th className="border border-slate-300 p-1.5 text-sky-700 font-bold">ΔT Transparente</th>
+                    <th className="border border-slate-300 p-1.5">Diferença</th>
+                    <th className="border border-slate-300 p-1.5">Maior Variação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {globalStats.testSummaries.map(s => (
+                    <tr key={s.testNumber}>
+                      <td className="border border-slate-300 p-1.5 font-bold">Teste {s.testNumber}</td>
+                      <td className="border border-slate-300 p-1.5">{s.initialTempBlack.toFixed(1)}°C / {s.initialTempClear.toFixed(1)}°C</td>
+                      <td className="border border-slate-300 p-1.5">{s.finalTempBlack.toFixed(1)}°C / {s.finalTempClear.toFixed(1)}°C</td>
+                      <td className="border border-slate-300 p-1.5 font-bold text-rose-700">+{s.deltaTBlack.toFixed(1)}°C</td>
+                      <td className="border border-slate-300 p-1.5 font-bold text-sky-700">+{s.deltaTClear.toFixed(1)}°C</td>
+                      <td className="border border-slate-300 p-1.5">{s.differenceDeltaT > 0 ? `+${s.differenceDeltaT.toFixed(1)}°C` : `${s.differenceDeltaT.toFixed(1)}°C`}</td>
+                      <td className="border border-slate-300 p-1.5 font-bold">{s.higherBottleLabel}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           {/* Data Table */}
           <div className="space-y-2">
-            <h3 className="font-bold text-slate-900 text-sm">Tabela de Medições Experimentais</h3>
+            <h3 className="font-bold text-slate-900 text-sm">Tabela de Medições Experimentais Completas</h3>
             <table className="w-full text-left border-collapse border border-slate-300 text-[11px]">
               <thead className="bg-slate-100 text-slate-800">
                 <tr>
@@ -121,7 +157,7 @@ export const PrintableReportModal: React.FC = () => {
                   <th className="border border-slate-300 p-2">Tempo (min)</th>
                   <th className="border border-slate-300 p-2">Temp Preta (°C)</th>
                   <th className="border border-slate-300 p-2">Temp Transparente (°C)</th>
-                  <th className="border border-slate-300 p-2">Diferença (°C)</th>
+                  <th className="border border-slate-300 p-2">Diferença Instantânea (°C)</th>
                   <th className="border border-slate-300 p-2">Observações</th>
                 </tr>
               </thead>
@@ -150,11 +186,20 @@ export const PrintableReportModal: React.FC = () => {
 
           {/* Scientific Conclusion & ODS 13 */}
           <div className="space-y-3 pt-2">
-            <h3 className="font-bold text-slate-900 text-sm">Conclusão & Relação com a ODS 13</h3>
-            <p className="text-slate-700 leading-relaxed text-[11px]">
-              O experimento comprovou quantitativamente que corpos escuros tendem a apresentar maior variação de temperatura (ΔT) por absorverem uma proporção significativamente superior de radiação solar incidente. 
+            <h3 className="font-bold text-slate-900 text-sm">Conclusão Científica & Relação com a ODS 13</h3>
+            <div className="p-3 bg-slate-50 border border-slate-300 rounded space-y-1.5">
+              <strong className="text-slate-900 block font-bold">{globalStats.conclusionTitle}</strong>
+              <p className="text-slate-700 leading-relaxed text-[11px]">
+                {globalStats.interpretationText}
+              </p>
+              <p className="text-[10px] text-slate-500 italic">
+                "{globalStats.scientificCaveat}"
+              </p>
+            </div>
+
+            <p className="text-slate-700 leading-relaxed text-[11px] pt-1">
               Esse princípio físico elucida a formação de <strong>ilhas de calor urbanas</strong> nas cidades pavimentadas com asfalto escuro. 
-              Como estratégia de adaptação e mitigação alinhada à <strong>ODS 13</strong>, recomenda-se a implantação de superfícies reflexivas (alto albedo / telhados frios) e arborização urbana.
+              Como estratégia de adaptação e mitigação alinhada à <strong>ODS 13 (Ação Contra a Mudança Global do Clima)</strong>, recomenda-se a implantação de superfícies reflexivas (alto albedo / telhados frios) e arborização urbana para atenuar as temperaturas extremas nos centros habitados.
             </p>
           </div>
 

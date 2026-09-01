@@ -3,6 +3,7 @@ import { Sliders, HelpCircle, ArrowRight } from 'lucide-react';
 import { ParametricControls } from '../components/simulation/ParametricControls';
 import { useExperiment } from '../context/ExperimentContext';
 import { Button } from '../components/common/Button';
+import { Badge } from '../components/common/Badge';
 
 export const SimulationPage: React.FC = () => {
   const { setActivePage } = useExperiment();
@@ -12,14 +13,17 @@ export const SimulationPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 block mb-1">
-            Simulador Físico • Modelagem Matemática
-          </span>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
+              Simulador Físico • Modelagem Teórica
+            </span>
+            <Badge variant="amber" dot>🟡 Dados simulados</Badge>
+          </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-white">
-            Simulação Paramétrica Detalhada
+            Simulação Paramétrica Teórica
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Ajuste coeficientes de absorção, intensidade do Sol e convecção para comparar cenários teóricos
+            Ajuste coeficientes de absorção, intensidade do Sol e convecção para comparar cenários teóricos (não interfere na conclusão dos dados reais).
           </p>
         </div>
 

@@ -1,3 +1,5 @@
+export type ConclusionStatus = 'confirmed' | 'not_confirmed' | 'inconclusive' | 'insufficient_data';
+
 export interface Measurement {
   id: string;
   testNumber: number; // e.g. 1, 2, 3
@@ -16,14 +18,19 @@ export interface TestSummary {
   initialTempClear: number;
   finalTempClear: number;
   deltaTClear: number;
-  differenceDeltaT: number;
-  percentageDifference: number;
+  differenceDeltaT: number; // deltaTBlack - deltaTClear
+  percentageDifference: number | null; // null if deltaTClear is 0
+  percentageNote: string;
+  higherBottle: 'black' | 'clear' | 'equal';
+  higherBottleLabel: string;
   measurementCount: number;
   maxTimeMinutes: number;
+  isValid: boolean;
 }
 
 export interface GlobalExperimentStats {
   hasData: boolean;
+  hasValidTests: boolean;
   totalTests: number;
   totalMeasurements: number;
   avgInitialTemp: number;
@@ -31,10 +38,35 @@ export interface GlobalExperimentStats {
   avgFinalTempClear: number;
   avgDeltaTBlack: number;
   avgDeltaTClear: number;
-  avgDifference: number;
-  avgPercentageDiff: number;
+  avgDifference: number; // avgDeltaTBlack - avgDeltaTClear
+  avgPercentageDiff: number | null; // null if avgDeltaTClear is 0
+  percentageReferenceNote: string;
+  canCalculatePercentage: boolean;
   winningBottle: 'black' | 'clear' | 'equal' | 'none';
   highestTempRecorded: number;
+  conclusionStatus: ConclusionStatus;
+  marginThreshold: number; // Configurable minimal difference margin (default: 0.5°C)
+  conclusionTitle: string;
+  conclusionBadgeText: string;
+  conclusionDescription: string;
+  interpretationText: string;
+  scientificCaveat: string;
+  testSummaries: TestSummary[];
+  estherSpeech: {
+    text: string;
+    clozeTemplate: string;
+    clozeAnswers: string[];
+  };
+}
+
+export interface CalculationAuditStep {
+  stepNumber: number;
+  title: string;
+  description: string;
+  formula?: string;
+  calculationDetails: string[];
+  summaryResult: string;
+  scientificSignificance: string;
 }
 
 export type MasteryLevel = 'none' | 'practicing' | 'good' | 'mastered';

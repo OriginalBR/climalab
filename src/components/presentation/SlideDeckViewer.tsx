@@ -254,7 +254,7 @@ export const SlideDeckViewer: React.FC = () => {
               </div>
             </div>
 
-            {globalStats.hasData && (
+            {globalStats.hasValidTests && (
               <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 flex justify-around text-center">
                 <div>
                   <span className="text-[11px] text-slate-400 block">ΔT Médio Garrafa Preta:</span>
@@ -265,8 +265,12 @@ export const SlideDeckViewer: React.FC = () => {
                   <span className="text-xl font-mono font-bold text-sky-400">+{globalStats.avgDeltaTClear.toFixed(1)}°C</span>
                 </div>
                 <div>
-                  <span className="text-[11px] text-slate-400 block">Diferença Percentual:</span>
-                  <span className="text-xl font-mono font-bold text-emerald-400">+{globalStats.avgPercentageDiff}%</span>
+                  <span className="text-[11px] text-slate-400 block">Diferença Percentual (Ref: Transp):</span>
+                  <span className="text-xl font-mono font-bold text-emerald-400">
+                    {globalStats.canCalculatePercentage && globalStats.avgPercentageDiff !== null
+                      ? `${globalStats.avgPercentageDiff > 0 ? '+' : ''}${globalStats.avgPercentageDiff}%`
+                      : 'N/A'}
+                  </span>
                 </div>
               </div>
             )}
@@ -277,9 +281,11 @@ export const SlideDeckViewer: React.FC = () => {
         {currentSlide === 5 && (
           <div className="space-y-6 my-auto animate-fadeIn max-w-4xl mx-auto w-full">
             <div className="text-center space-y-2">
-              <Badge variant="emerald">Conclusão Científica</Badge>
+              <Badge variant={globalStats.conclusionStatus === 'confirmed' ? 'emerald' : globalStats.conclusionStatus === 'not_confirmed' ? 'amber' : 'blue'}>
+                Conclusão Científica
+              </Badge>
               <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-white">
-                O que os Dados Comprovam?
+                O que os Dados Indicam?
               </h2>
             </div>
 
@@ -287,19 +293,18 @@ export const SlideDeckViewer: React.FC = () => {
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-6 h-6 text-emerald-400 shrink-0 mt-1" />
                 <div className="space-y-2 text-sm text-slate-200 leading-relaxed">
+                  <h4 className="text-base font-bold text-emerald-400 font-display">
+                    {globalStats.conclusionTitle}
+                  </h4>
                   <p>
-                    {globalStats.hasData && globalStats.winningBottle === 'black' ? (
-                      <span>
-                        Com base nas medições realizadas, a <strong>garrafa preta apresentou maior variação de temperatura</strong> em relação à garrafa transparente sob as mesmas condições de exposição solar (+{globalStats.avgDeltaTBlack.toFixed(1)}°C vs +{globalStats.avgDeltaTClear.toFixed(1)}°C).
-                      </span>
+                    {globalStats.hasValidTests ? (
+                      <span>{globalStats.interpretationText}</span>
                     ) : (
-                      <span>
-                        Os dados experimentais permitem confirmar que a cor e as características ópticas de uma superfície influenciam diretamente a proporção de radiação solar absorvida e transformada em calor sensível.
-                      </span>
+                      <span>{globalStats.conclusionDescription}</span>
                     )}
                   </p>
-                  <p className="text-xs text-slate-400">
-                    O resultado não decorre de suposições, mas de medições sistemáticas repetidas ao longo do tempo.
+                  <p className="text-xs text-slate-400 italic pt-1 border-t border-slate-800">
+                    "{globalStats.scientificCaveat}"
                   </p>
                 </div>
               </div>
