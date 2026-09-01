@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="gradSun" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    <linearGradient id="gradGlobe" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="46" fill="#0f172a" stroke="#10b981" stroke-width="3"/>
+  <!-- Sun -->
+  <circle cx="34" cy="36" r="14" fill="url(#gradSun)" />
+  <path d="M34 16 L34 20 M34 52 L34 56 M14 36 L18 36 M50 36 L54 36" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+  <!-- Thermometer -->
+  <rect x="64" y="24" width="8" height="38" rx="4" fill="#334155" stroke="#94a3b8" stroke-width="2" />
+  <rect x="66" y="38" width="4" height="20" rx="2" fill="#ef4444" />
+  <circle cx="68" cy="62" r="7" fill="#ef4444" stroke="#94a3b8" stroke-width="2" />
+  <!-- Earth / ODS arc -->
+  <path d="M22 74 Q 50 54 78 74" fill="none" stroke="url(#gradGlobe)" stroke-width="5" stroke-linecap="round" />
+</svg>
