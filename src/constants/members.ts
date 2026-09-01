@@ -56,20 +56,12 @@ Mas não queríamos apenas assumir que isso aconteceria. Por isso, fizemos {{med
     role: 'Apresentadora 3',
     topic: 'Materiais & Controle Experimental',
     avatarSeed: 'Ana',
-    speechText: `Para realizar o experimento, usamos duas garrafas iguais, a mesma quantidade de água, tinta preta, um termômetro e a luz do Sol.
-
-Colocamos a mesma quantidade de água nas duas garrafas e medimos a temperatura inicial.
-
-Depois, deixamos as duas no mesmo local e pelo mesmo período de tempo, tentando manter as condições iguais para que a principal diferença fosse a cor das garrafas.`,
-    clozeTemplate: `Para realizar o experimento, usamos duas garrafas {{iguais}}, a mesma quantidade de {{água}}, tinta preta, um {{termômetro}} e a luz do {{Sol}}.
-
-Colocamos a mesma quantidade de água nas duas garrafas e medimos a temperatura {{inicial}}.
-
-Depois, deixamos as duas no mesmo local e pelo mesmo período de {{tempo}}, tentando manter as condições {{iguais}} para que a principal diferença fosse a {{cor}} das garrafas.`,
-    clozeAnswers: ['iguais', 'água', 'termômetro', 'Sol', 'inicial', 'tempo', 'iguais', 'cor'],
+    speechText: `Para realizar o experimento, usamos duas garrafas pet, tinta preta, um termômetro e uma luminária para substituir a luz do sol. Para fazer o experimento colocamos a mesma quantidade de água nas duas garrafas e medimos a temperatura inicial. Depois, deixamos as duas no mesmo local e pelo mesmo período de tempo, tudo foi mantido no mesmo padrão, exceto a cor das garrafas.`,
+    clozeTemplate: `Para realizar o experimento, usamos duas {{garrafas pet}}, tinta preta, um {{termômetro}} e uma {{luminária}} para substituir a luz do sol. Para fazer o experimento colocamos a mesma quantidade de {{água}} nas duas garrafas e medimos a temperatura {{inicial}}. Depois, deixamos as duas no mesmo local e pelo mesmo período de {{tempo}}, tudo foi mantido no mesmo padrão, exceto a {{cor}} das garrafas.`,
+    clozeAnswers: ['garrafas pet', 'termômetro', 'luminária', 'água', 'inicial', 'tempo', 'cor'],
     tips: [
-      'Aponte para as garrafas físicas ou para o cartaz/tela neste momento.',
-      'Destaque a importância do controle de variáveis (mesmo volume, mesmo local).'
+      'Aponte para as garrafas e para a luminária neste momento.',
+      'Destaque que tudo foi mantido no mesmo padrão, exceto a cor.'
     ],
     masteryLevel: 'none',
     practiceCount: 0
@@ -80,20 +72,12 @@ Depois, deixamos as duas no mesmo local e pelo mesmo período de {{tempo}}, tent
     role: 'Apresentadora 4',
     topic: 'Coleta de Dados & Repetição',
     avatarSeed: 'Gabrielle',
-    speechText: `Durante o experimento, medimos a temperatura da água em intervalos de tempo determinados e anotamos todos os resultados.
-
-Também repetimos o experimento para termos mais dados e diminuir a influência de fatores externos, como vento ou mudanças na intensidade da luz solar.
-
-Depois, organizamos todas as informações em uma tabela.`,
-    clozeTemplate: `Durante o experimento, medimos a {{temperatura}} da água em intervalos de {{tempo}} determinados e anotamos todos os resultados.
-
-Também {{repetimos}} o experimento para termos mais dados e diminuir a influência de fatores {{externos}}, como {{vento}} ou mudanças na intensidade da luz solar.
-
-Depois, organizamos todas as informações em uma {{tabela}}.`,
-    clozeAnswers: ['temperatura', 'tempo', 'repetimos', 'externos', 'vento', 'tabela'],
+    speechText: `Durante o experimento, medimos a temperatura da água em intervalos determinados e anotamos os resultados. Repetimos o experimento para obter mais dados e reduzir a influência de fatores externos, como vento e mudanças na luz solar. Depois, organizamos as informações em uma tabela.`,
+    clozeTemplate: `Durante o experimento, medimos a {{temperatura}} da água em intervalos {{determinados}} e anotamos os resultados. {{Repetimos}} o experimento para obter mais dados e reduzir a influência de fatores {{externos}}, como {{vento}} e mudanças na luz solar. Depois, organizamos as informações em uma {{tabela}}.`,
+    clozeAnswers: ['temperatura', 'determinados', 'Repetimos', 'externos', 'vento', 'tabela'],
     tips: [
-      'Mostre a tabela de dados no app ou no cartaz.',
-      'Explique que repetir o experimento aumenta a confiabilidade científica.'
+      'Mostre a tabela de dados no aplicativo ou no cartaz.',
+      'Explique que a repetição reduz o impacto de fatores externos.'
     ],
     masteryLevel: 'none',
     practiceCount: 0
@@ -136,12 +120,12 @@ Assim, conseguimos comparar matematicamente o aquecimento das duas garrafas.`,
     role: 'Apresentadora 6',
     topic: 'Análise dos Resultados Reais',
     avatarSeed: 'Esther',
-    speechText: `Os dados confirmaram nossa hipótese: nas condições do nosso experimento, a garrafa preta apresentou maior aumento de temperatura do que a transparente. Usamos uma tabela e um gráfico para organizar as temperaturas e comparar os resultados. Assim, observamos que a superfície escura apresentou maior aquecimento nas condições testadas.`,
-    clozeTemplate: `Os dados {{confirmaram}} nossa hipótese: nas condições do nosso experimento, a garrafa {{preta}} apresentou maior aumento de temperatura do que a {{transparente}}. Usamos uma {{tabela}} e um {{gráfico}} para organizar as temperaturas e comparar os resultados. Assim, observamos que a superfície {{escura}} apresentou maior aquecimento nas condições testadas.`,
-    clozeAnswers: ['confirmaram', 'preta', 'transparente', 'tabela', 'gráfico', 'escura'],
+    speechText: `Os dados confirmaram nossa hipótese: a garrafa preta aqueceu mais do que a transparente. Usamos uma tabela e um gráfico para organizar as temperaturas e comparar os resultados. Assim, provamos que cores escuras absorvem mais calor.`,
+    clozeTemplate: `Os dados {{confirmaram}} nossa hipótese: a garrafa {{preta}} aqueceu mais do que a {{transparente}}. Usamos uma {{tabela}} e um {{gráfico}} para organizar as temperaturas e comparar os resultados. Assim, {{provamos}} que cores {{escuras}} absorvem mais calor.`,
+    clozeAnswers: ['confirmaram', 'preta', 'transparente', 'tabela', 'gráfico', 'provamos', 'escuras'],
     tips: [
-      'Cite os valores médios de ΔT calculados para a garrafa preta e transparente.',
-      'Aponte a diferença em °C e no gráfico de Temperatura x Tempo.'
+      'Aponte a tabela e o gráfico de Temperatura x Tempo.',
+      'Fale com segurança ao apresentar o resultado do grupo.'
     ],
     masteryLevel: 'none',
     practiceCount: 0

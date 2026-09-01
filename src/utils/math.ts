@@ -247,9 +247,9 @@ export function computeGlobalStats(
     interpretationText = `Nos testes realizados, a garrafa preta apresentou uma variação média de temperatura de ${avgDeltaTBlack.toFixed(1)}°C, enquanto a garrafa transparente apresentou ${avgDeltaTClear.toFixed(1)}°C. Portanto, nas condições utilizadas neste experimento, a garrafa preta apresentou maior aumento de temperatura, o que está de acordo com nossa hipótese.`;
     
     estherSpeech = {
-      text: 'Os dados confirmaram nossa hipótese: nas condições do nosso experimento, a garrafa preta apresentou maior aumento de temperatura do que a transparente. Usamos uma tabela e um gráfico para organizar as temperaturas e comparar os resultados. Assim, observamos que a superfície escura apresentou maior aquecimento nas condições testadas.',
-      clozeTemplate: 'Os dados {{confirmaram}} nossa hipótese: nas condições do nosso experimento, a garrafa {{preta}} apresentou maior aumento de temperatura do que a {{transparente}}. Usamos uma {{tabela}} e um {{gráfico}} para organizar as temperaturas e comparar os resultados. Assim, observamos que a superfície {{escura}} apresentou maior aquecimento nas condições testadas.',
-      clozeAnswers: ['confirmaram', 'preta', 'transparente', 'tabela', 'gráfico', 'escura'],
+      text: 'Os dados confirmaram nossa hipótese: a garrafa preta aqueceu mais do que a transparente. Usamos uma tabela e um gráfico para organizar as temperaturas e comparar os resultados. Assim, provamos que cores escuras absorvem mais calor.',
+      clozeTemplate: 'Os dados {{confirmaram}} nossa hipótese: a garrafa {{preta}} aqueceu mais do que a {{transparente}}. Usamos uma {{tabela}} e um {{gráfico}} para organizar as temperaturas e comparar os resultados. Assim, {{provamos}} que cores {{escuras}} absorvem mais calor.',
+      clozeAnswers: ['confirmaram', 'preta', 'transparente', 'tabela', 'gráfico', 'provamos', 'escuras'],
     };
   } else if (-avgDifference >= marginThreshold) {
     // Caso 2: Hipótese Não Confirmada
