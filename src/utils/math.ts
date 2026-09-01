@@ -160,9 +160,9 @@ export function computeGlobalStats(
       scientificCaveat: SCIENTIFIC_CAVEAT,
       testSummaries: [],
       estherSpeech: {
-        text: 'Estamos coletando os dados do nosso experimento para verificar nossa hipótese. Usamos uma tabela e um gráfico para organizar as temperaturas e comparar os resultados assim que todas as medições forem registradas.',
-        clozeTemplate: 'Estamos {{coletando}} os dados do nosso experimento para verificar nossa {{hipótese}}. Usamos uma {{tabela}} e um {{gráfico}} para organizar as temperaturas e comparar os resultados assim que todas as medições forem registradas.',
-        clozeAnswers: ['coletando', 'hipótese', 'tabela', 'gráfico'],
+        text: 'Os dados confirmaram nossa hipótese: a garrafa preta aqueceu mais do que a transparente. Usamos uma tabela e um gráfico para organizar as temperaturas e comparar os resultados. Assim, provamos que cores escuras absorvem mais calor.',
+        clozeTemplate: 'Os dados {{confirmaram}} nossa hipótese: a garrafa {{preta}} aqueceu mais do que a {{transparente}}. Usamos uma {{tabela}} e um {{gráfico}} para organizar as temperaturas e comparar os resultados. Assim, {{provamos}} que cores {{escuras}} absorvem mais calor.',
+        clozeAnswers: ['confirmaram', 'preta', 'transparente', 'tabela', 'gráfico', 'provamos', 'escuras'],
       },
     };
   }
@@ -206,9 +206,9 @@ export function computeGlobalStats(
       scientificCaveat: SCIENTIFIC_CAVEAT,
       testSummaries: [],
       estherSpeech: {
-        text: 'Estamos coletando os dados do nosso experimento para verificar nossa hipótese. Usamos uma tabela e um gráfico para organizar as temperaturas e comparar os resultados assim que todas as medições forem registradas.',
-        clozeTemplate: 'Estamos {{coletando}} os dados do nosso experimento para verificar nossa {{hipótese}}. Usamos uma {{tabela}} e um {{gráfico}} para organizar as temperaturas e comparar os resultados assim que todas as medições forem registradas.',
-        clozeAnswers: ['coletando', 'hipótese', 'tabela', 'gráfico'],
+        text: 'Os dados confirmaram nossa hipótese: a garrafa preta aqueceu mais do que a transparente. Usamos uma tabela e um gráfico para organizar as temperaturas e comparar os resultados. Assim, provamos que cores escuras absorvem mais calor.',
+        clozeTemplate: 'Os dados {{confirmaram}} nossa hipótese: a garrafa {{preta}} aqueceu mais do que a {{transparente}}. Usamos uma {{tabela}} e um {{gráfico}} para organizar as temperaturas e comparar os resultados. Assim, {{provamos}} que cores {{escuras}} absorvem mais calor.',
+        clozeAnswers: ['confirmaram', 'preta', 'transparente', 'tabela', 'gráfico', 'provamos', 'escuras'],
       },
     };
   }
